@@ -5,11 +5,10 @@ Installs MeCab (http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html) from
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
 
-e.g.
-#### packages
-- `toaster` - mecab needs toaster to brown your bagel.
+### platforms
+
+Only tested on Ubuntu 13.04 for purpose of use with Chef Solo (which doesn't mean this cookbook doesn't work with other platforms though.) Your feedback is appreciated.
 
 Attributes
 ----------
@@ -35,9 +34,7 @@ e.g.
 Usage
 -----
 #### mecab::default
-TODO: Write usage instructions for each cookbook.
 
-e.g.
 Just include `mecab` in your node's `run_list`:
 
 ```json
@@ -51,9 +48,7 @@ Just include `mecab` in your node's `run_list`:
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
 
-e.g.
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write you change
@@ -63,4 +58,4 @@ e.g.
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+Author(s): [@luvtechno](https://github.com/luvtechno)
