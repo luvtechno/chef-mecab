@@ -1,9 +1,7 @@
-mecab Cookbook
+MeCab Cookbook
 ==============
-TODO: Enter the cookbook description here.
 
-e.g.
-This cookbook makes your favorite breakfast sandwhich.
+Installs MeCab (http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html) from source code.
 
 Requirements
 ------------
