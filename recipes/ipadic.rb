@@ -24,30 +24,22 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-mecab_src_url = "https://mecab.googlecode.com/files/mecab-#{node['mecab']['version']}.tar.gz"
-mecab_src_filepath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/mecab-#{node['mecab']['version']}.tar.gz"
+ipadic_src_url = "https://mecab.googlecode.com/files/mecab-ipadic-#{node['mecab']['ipadic']['version']}.tar.gz"
+ipadic_src_filepath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/mecab-ipadic-#{node['mecab']['ipadic']['version']}.tar.gz"
 
-remote_file mecab_src_filepath do
-  source mecab_src_url
-  checksum node['mecab']['checksum']
+remote_file ipadic_src_filepath do
+  source ipadic_src_url
+  checksum node['mecab']['ipadic']['checksum']
   backup false
 end
 
-bash "compile_mecab_source" do
-  cwd ::File.dirname(mecab_src_filepath)
+bash "install_mecab_ipadic" do
+  cwd ::File.dirname(ipadic_src_filepath)
   code <<-EOH
-    tar zxf #{::File.basename(mecab_src_filepath)} -C #{::File.dirname(mecab_src_filepath)} &&
-    cd mecab-#{node['mecab']['version']} &&
-    ./configure &&
+    tar zxf #{::File.basename(ipadic_src_filepath)} -C #{::File.dirname(ipadic_src_filepath)} &&
+    cd mecab-ipadic-#{node['mecab']['ipadic']['version']} &&
+    ./configure --with-charset=utf-8 &&
     make &&
-    make check &&
     make install
   EOH
 end
-
-# Make sure libmecab.so can be linked
-if node['platform'] == 'ubuntu'
-  execute 'ldconfig'
-end
-
-include_recipe 'mecab::ipadic'
