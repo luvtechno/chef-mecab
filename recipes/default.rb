@@ -44,3 +44,9 @@ bash "compile_mecab_source" do
     make install
   EOH
 end
+
+# Make sure libmecab.so can be linked
+if node['platform'] == 'ubuntu'
+  execute 'ldconfig'
+end
+
