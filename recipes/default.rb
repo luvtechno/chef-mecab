@@ -40,6 +40,7 @@ bash "compile_mecab_source" do
     cd mecab-#{node['mecab']['version']} &&
     ./configure &&
     make &&
+    make check &&
     make install
   EOH
 end
