@@ -42,9 +42,8 @@ bash "unarchive_and_configure_ipadic" do
   EOH
 end
 
+additonal_dictionary_path = node['mecab']['additonal_dictionary_path']
 if node['mecab']['additonal_dictionary_path']
-  additonal_dictionary_path = "#{Chef::Config['file_cache_path'] || '/tmp'}/#{node['mecab']['additonal_dictionary_path']}"
-
   bash "copy_additional_dictionary_files" do
     cwd ::File.dirname(ipadic_src_filepath)
     code <<-EOH
