@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: mecab
-# Recipe:: default
+# Recipe:: ruby
 #
 # Copyright 2013, Wantedly, Inc.
 #
@@ -24,14 +24,22 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-default['mecab']['version'] = '0.996'
-default['mecab']['checksum'] = '15baca0983a61c1a49cffd4a919463a0a39ef127'
 
-default['mecab']['ipadic']['version'] = '2.7.0-20070801'
-default['mecab']['ipadic']['checksum'] = '0d9d021853ba4bb4adfa782ea450e55bfe1a229b'
+mecab_ruby_src_url = "https://mecab.googlecode.com/files/mecab-ruby-#{node['mecab']['ruby']['version']}.tar.gz"
+mecab_ruby_src_filepath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/mecab-ruby-#{node['mecab']['ruby']['version']}.tar.gz"
 
-default['mecab']['additonal_dictionary_path'] = nil
+remote_file mecab_ruby_src_filepath do
+  source mecab_ruby_src_url
+  checksum node['mecab']['ruby']['checksum']
+  backup false
+end
 
-default['mecab']['ruby']['version'] = '0.996'
-default['mecab']['ruby']['gem_version'] = '0.99'
-default['mecab']['ruby']['checksum'] = '5730d9667118d79ad6f2c49f45476d0874718d10'
+bash "build_and_install_mecab_ruby_gem" do
+  cwd ::File.dirname(mecab_ruby_src_filepath)
+  code <<-EOH
+    tar zxf #{::File.basename(mecab_ruby_src_filepath)} -C #{::File.dirname(mecab_ruby_src_filepath)} &&
+    cd mecab-ruby-#{node['mecab']['ruby']['version']} &&
+    gem build mecab-ruby.gemspec &&
+    gem install mecab-ruby-#{node['mecab']['ruby']['gem_version']}.gem
+  EOH
+end
