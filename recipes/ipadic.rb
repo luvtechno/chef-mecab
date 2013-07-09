@@ -33,12 +33,29 @@ remote_file ipadic_src_filepath do
   backup false
 end
 
-bash "install_mecab_ipadic" do
+bash "unarchive_and_configure_ipadic" do
   cwd ::File.dirname(ipadic_src_filepath)
   code <<-EOH
     tar zxf #{::File.basename(ipadic_src_filepath)} -C #{::File.dirname(ipadic_src_filepath)} &&
     cd mecab-ipadic-#{node['mecab']['ipadic']['version']} &&
-    ./configure --with-charset=utf-8 &&
+    ./configure --with-charset=utf-8
+  EOH
+end
+
+if default['mecab']['additonal_dictionary_path']
+  bash "copy_additional_dictionary_files" do
+    cwd ::File.dirname(ipadic_src_filepath)
+    code <<-EOH
+      cd mecab-ipadic-#{node['mecab']['ipadic']['version']} &&
+      copy #{node['mecab']['additonal_dictionary_path']}/*.csv .
+    EOH
+  end
+end
+
+bash "make_and_install_ipadic" do
+  cwd ::File.dirname(ipadic_src_filepath)
+  code <<-EOH
+    cd mecab-ipadic-#{node['mecab']['ipadic']['version']} &&
     make &&
     make install
   EOH
