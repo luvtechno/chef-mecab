@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: mecab
-# Recipe:: default
+# Recipe:: ipadic
 #
 # Copyright 2013, Wantedly, Inc.
 #
@@ -42,12 +42,14 @@ bash "unarchive_and_configure_ipadic" do
   EOH
 end
 
-if default['mecab']['additonal_dictionary_path']
+if node['mecab']['additonal_dictionary_path']
+  additonal_dictionary_path = "#{Chef::Config['file_cache_path'] || '/tmp'}/#{node['mecab']['additonal_dictionary_path']}"
+
   bash "copy_additional_dictionary_files" do
     cwd ::File.dirname(ipadic_src_filepath)
     code <<-EOH
       cd mecab-ipadic-#{node['mecab']['ipadic']['version']} &&
-      copy #{node['mecab']['additonal_dictionary_path']}/*.csv .
+      copy #{additonal_dictionary_path}/*.csv .
     EOH
   end
 end
