@@ -49,7 +49,8 @@ if node['mecab']['additonal_dictionary_path']
     cwd ::File.dirname(ipadic_src_filepath)
     code <<-EOH
       cd mecab-ipadic-#{node['mecab']['ipadic']['version']} &&
-      cp #{additonal_dictionary_path}/*.csv .
+      cp #{additonal_dictionary_path}/*.csv . &&
+      /usr/local/libexec/mecab/mecab-dict-index -f euc-jp -t utf8
     EOH
   end
 end
