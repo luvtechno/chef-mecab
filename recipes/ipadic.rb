@@ -49,7 +49,7 @@ if node['mecab']['additonal_dictionary_path']
     cwd ::File.dirname(ipadic_src_filepath)
     code <<-EOH
       cd mecab-ipadic-#{node['mecab']['ipadic']['version']} &&
-      copy #{additonal_dictionary_path}/*.csv .
+      cp #{additonal_dictionary_path}/*.csv .
     EOH
   end
 end
