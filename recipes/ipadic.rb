@@ -24,7 +24,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-ipadic_src_url = "https://mecab.googlecode.com/files/mecab-ipadic-#{node['mecab']['ipadic']['version']}.tar.gz"
+ipadic_src_url = node['mecab']['ipadic']['url']
 ipadic_src_filepath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/mecab-ipadic-#{node['mecab']['ipadic']['version']}.tar.gz"
 
 remote_file ipadic_src_filepath do

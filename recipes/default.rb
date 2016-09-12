@@ -24,7 +24,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-mecab_src_url = "https://mecab.googlecode.com/files/mecab-#{node['mecab']['version']}.tar.gz"
+mecab_src_url = node['mecab']['url']
 mecab_src_filepath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/mecab-#{node['mecab']['version']}.tar.gz"
 
 remote_file mecab_src_filepath do
